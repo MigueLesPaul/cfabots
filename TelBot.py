@@ -9,14 +9,16 @@ class TelBot(telepot.Bot):
     def __init__(self,token):
                     
         configfile=os.path.expanduser('~/.botconfig')
+        config={}
         try:
-            config = json.loads(open(configfile).read())
-
-            if config['proxy']['active'] == 'yes':
-                telepot.api.set_proxy(config['proxy']['url'],(config['proxy']['user'],config['proxy']['pass']))
+            config = json.loads(open(configfile).read())   # Cambiar para que lea del environment
         except:
             print('Sin Configuración de Proxy')
-       
+            config['proxy']['active'] == 'no':       
+
+        if config['proxy']['active'] == 'yes':
+            telepot.api.set_proxy(config['proxy']['url'],(config['proxy']['user'],config['proxy']['pass']))
+        
         telepot.Bot.__init__(self,token)
         # self.bot=telepot.Bot(token)
         # MessageLoop(self.bot,self.handle1)
