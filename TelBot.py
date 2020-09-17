@@ -14,7 +14,7 @@ class TelBot(telepot.Bot):
             config = json.loads(open(configfile).read())   # Cambiar para que lea del environment
         except:
             print('Sin Configuración de Proxy')
-            config['proxy']['active'] == 'no':       
+            config['proxy']['active'] == 'no'       
 
         if config['proxy']['active'] == 'yes':
             telepot.api.set_proxy(config['proxy']['url'],(config['proxy']['user'],config['proxy']['pass']))

@@ -2,4 +2,10 @@ nohup.out
 *.gif
 *.mp4
 *.jpg
-
+*.png
+wrfout*
+images/*
+build
+dist
+*.egg-info
+__pycache__
