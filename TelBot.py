@@ -11,6 +11,7 @@ class TelBot(telepot.Bot):
 
 
         proxyconf=getenv("http_proxy")
+        proxyconf=open('/home/cluster/proxy','r').read().strip('\n')
 
         if proxyconf != None:
             proxy_user=proxyconf.split(":")[1].strip("//")
