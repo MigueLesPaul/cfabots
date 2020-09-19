@@ -3,7 +3,14 @@
 import os
 from os.path import basename
 from glob import glob
+import re
 
+
+
+def natural_sort(l): 
+    convert = lambda text: int(text) if text.isdigit() else text.lower() 
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    return sorted(l, key = alphanum_key)
 
 def pngs2mp4(fileexpr, imagesize='640:480'):
     """ 
@@ -12,20 +19,22 @@ def pngs2mp4(fileexpr, imagesize='640:480'):
     """
     newfilename = fileexpr[:-1]
 
-    cmd1 = """convert -delay 100 {} {}.gif""".format(fileexpr, newfilename)
-    # print(cmd1)
-    # os.system(cmd1)
+    filelist = natural_sort(glob(fileexpr+'.png'))
+    
 
-    # cmd2 = """cat {}.png|/usr/bin/ffmpeg -y -framerate 1 -i -  -crf 42.0 -vcodec libvpx -b:v 50k -v:f scale={} "{}.webm" """.format(
-    # fileexpr,imagesize, newfilename)
+    cmd1 = """cat {}|/usr/bin/ffmpeg -y -framerate 1 -i -  -vcodec libvpx -b:v 100k -s 640x480  "{}.webm" """.format(
+    " ".join(filelist), newfilename)
 
-    cmd1 = """cat {}.png|/usr/bin/ffmpeg -y -framerate 1 -i -  -vcodec libvpx -b:v 100k -s 640x480  "{}.webm" """.format(
-        fileexpr, newfilename)
 
-    cmd2 = """/usr/bin/ffmpeg -y  -i {}.webm  -b:v 8k -s 640x480 "{}.gif" """.format(
-        fileexpr, newfilename)
+    # cmd1 = """/usr/bin/ffmpeg -y  -framerate 1/2.5 -i {}  -vcodec libvpx -b:v 100k -s 640x480  -r 25 -pix_fmt yuv420p "{}.webm" """.format(
+    # " ".join(filelist), newfilename)
 
-    # print(cmd2)
+
+
+    # cmd2 = """/usr/bin/ffmpeg -y  -i {}.webm  -b:v 8k -s 640x480 "{}.gif" """.format(
+        # fileexpr, newfilename)
+
+    print(cmd1)
     os.system(cmd1)
     # os.system(cmd2)
     return """{}.webm""".format(newfilename)
