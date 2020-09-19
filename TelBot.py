@@ -3,22 +3,22 @@ import telepot
 from telepot.loop import MessageLoop 
 import json
 import os.path
+from os import getenv
 import time
 
 class TelBot(telepot.Bot):
     def __init__(self,token):
-                    
-        configfile=os.path.expanduser('~/.botconfig')
-        config={}
-        try:
-            config = json.loads(open(configfile).read())   # Cambiar para que lea del environment
-        except:
-            print('Sin Configuración de Proxy')
-            config['proxy']['active'] == 'no':       
 
-        if config['proxy']['active'] == 'yes':
-            telepot.api.set_proxy(config['proxy']['url'],(config['proxy']['user'],config['proxy']['pass']))
-        
+
+        proxyconf=getenv("http_proxy")
+        proxyconf=open('/home/cluster/proxy','r').read().strip('\n')
+
+        if proxyconf != None:
+            proxy_user=proxyconf.split(":")[1].strip("//")
+            proxy_pass=proxyconf.split(":")[2].split("@")[0]
+            proxy_url="http://"+proxyconf.split("@")[1]
+            telepot.api.set_proxy(proxy_url,(proxy_user,proxy_pass))
+
         telepot.Bot.__init__(self,token)
         # self.bot=telepot.Bot(token)
         # MessageLoop(self.bot,self.handle1)
