@@ -54,7 +54,7 @@ def publicar():
 
     currcycle = cycles[int(nowgmt.tm_hour / 6)]  # ultima corrida
     outputdir = "/opt/sispi/OUTPUTS_1W/outputs"
-    curoutput = time.strftime('%Y%m%d') + currcycle
+    curoutput = time.strftime('%Y%m%d',nowgmt) + currcycle
 
     #Rain
 
