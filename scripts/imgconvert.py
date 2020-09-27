@@ -56,7 +56,7 @@ def pngs2mp4(fileexpr, imagesize='640:480'):
 #    print(cmd1)
 #    os.system(cmd1)
     # os.system(cmd2)
-    return """{}.webm""".format(newfilename)
+    return """{}.mp4""".format(newfilename)
 
 
 if __name__ == "__main__":
