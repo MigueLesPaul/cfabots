@@ -45,8 +45,8 @@ def is_ready(outputdir,curoutput):
 def publicar():
 
     bot = TelBot("1314850663:AAFuBzMDs5niJiUXHvH6ZaWI9rXHaz7GX8A")
-    # channel_id = 572031301
-    channel_id = -1001251422684
+    channel_id = -1001310737017     # Canal 
+    #channel_id = -1001251422684    # Grupo del equipo
     cycles = ['00', '06', '12', '18']
 
     nowlcl = time.localtime()
