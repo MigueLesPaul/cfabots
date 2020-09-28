@@ -2,7 +2,7 @@
 import telepot
 from telepot.loop import MessageLoop 
 import json
-import os.path
+from os.path import expanduser
 from os import getenv
 import time
 
@@ -11,7 +11,7 @@ class TelBot(telepot.Bot):
 
 
         proxyconf=getenv("http_proxy")
-        proxyconf=open('/home/cluster/proxy','r').read().strip('\n')
+        proxyconf=open(expanduser('~/proxy'),'r').read().strip('\n')
 
         if proxyconf != None:
             proxy_user=proxyconf.split(":")[1].strip("//")
