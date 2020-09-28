@@ -56,12 +56,13 @@ def publicar():
     outputdir = "/opt/sispi/OUTPUTS_1W/outputs"
     curoutput = time.strftime('%Y%m%d',nowgmt) + currcycle
 
+
     #Rain
 
     lluviafiles = join(outputdir, curoutput, "wrfout_" + curoutput, 'SFC/RAIN',
                        "wrfout_" + curoutput + "_d3_rain_sfc_*")
-    caption = """Pronóstico Numérico de Lluvia en 24h con inicialización {} {}00 UTC""".format(
-        time.strftime('%Y%m%d', nowgmt), currcycle)
+    caption = """Pronóstico Numérico de la precipitación para las próximas 24 horas a partir del modelo WRF-SisPI (Inicializado el día {} {}00 UTC/Hora local: {}) """.format(
+        time.strftime('%Y-%m-%d', nowgmt), currcycle,time.strftime('%Y-%m-%d %I:%M %p'))
     vidfile = pngs2mp4(lluviafiles, imagesize='480x320')
     response = bot.sendVideo(channel_id,
                              video=open(vidfile, 'rb'),
