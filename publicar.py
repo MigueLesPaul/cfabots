@@ -4,8 +4,10 @@ from TelBot import TelBot
 import json
 import sys
 import time
+import datetime 
+import pytz
 from glob import glob
-from os.path import join, exists
+from os.path import join, exists,expanduser
 from scripts.imgconvert import pngs2mp4
 
 
@@ -49,20 +51,27 @@ def publicar():
     #channel_id = -1001251422684    # Grupo del equipo
     cycles = ['00', '06', '12', '18']
 
-    nowlcl = time.localtime()
+    
     nowgmt = time.gmtime()
 
     currcycle = cycles[int(nowgmt.tm_hour / 6)]  # ultima corrida
+    
+    initdateZ = datetime.datetime(nowgmt.tm_year,nowgmt.tm_mon,nowgmt.tm_mday,int(currcycle),0,tzinfo=pytz.UTC)
+    initdateL = initdateZ.astimezone()
+
+
     outputdir = "/opt/sispi/OUTPUTS_1W/outputs"
-    curoutput = time.strftime('%Y%m%d',nowgmt) + currcycle
+    curoutput = initdateZ.strftime('%Y%m%d%H')
 
 
+   
     #Rain
 
     lluviafiles = join(outputdir, curoutput, "wrfout_" + curoutput, 'SFC/RAIN',
                        "wrfout_" + curoutput + "_d3_rain_sfc_*")
-    caption = """Pronóstico Numérico de la precipitación para las próximas 24 horas a partir del modelo WRF-SisPI (Inicializado el día {} {}00 UTC/Hora local: {}) """.format(
-        time.strftime('%Y-%m-%d', nowgmt), currcycle,time.strftime('%Y-%m-%d %I:%M %p'))
+    caption = """Pronóstico Numérico de la precipitación para las próximas 24 horas a partir del modelo WRF-SisPI (Inicializado el día {} UTC/Hora local: {}) """.format(
+        initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
+    print(caption)
     vidfile = pngs2mp4(lluviafiles, imagesize='480x320')
     response = bot.sendVideo(channel_id,
                              video=open(vidfile, 'rb'),
