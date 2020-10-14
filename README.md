@@ -7,3 +7,4 @@ Publicar información y gráficos en redes sociales
 
 	- telepot
 	- facebook-sdk 
+	- python-twitter
