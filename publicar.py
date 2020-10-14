@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from TelBot import TelBot
+from TwittBot import TwitBot
 import json
 import sys
 import time
@@ -47,6 +48,7 @@ def is_ready(outputdir,curoutput):
 def publicar():
 
     bot = TelBot("1314850663:AAFuBzMDs5niJiUXHvH6ZaWI9rXHaz7GX8A")
+    tbot = TwitBot()
     channel_id = -1001310737017     # Canal 
     #channel_id = -1001251422684    # Grupo del equipo
     cycles = ['00', '06', '12', '18']
@@ -71,15 +73,16 @@ def publicar():
                        "wrfout_" + curoutput + "_d3_rain_sfc_*")
     caption = """Pronóstico Numérico de la precipitación para las próximas 24 horas a partir del modelo WRF-SisPI (Inicializado el día {} UTC/Hora local: {}) """.format(
         initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
-    print(caption)
     vidfile = pngs2mp4(lluviafiles, imagesize='480x320')
+    
+    # publicar
     response = bot.sendVideo(channel_id,
                              video=open(vidfile, 'rb'),
                              width=480,
                              height=320,
                              caption=caption)
 
-
+    tbot.post(caption,vidfile)
 
 
     
