@@ -39,13 +39,3 @@ def handle1(msg):
     print(contenttype,chattype,chatid)
     print(msg['text'])
 
-if __name__ == "__main__":
-    bot = TelBot("1314850663:AAFuBzMDs5niJiUXHvH6ZaWI9rXHaz7GX8A")
-    print(bot.getMe())
-    # print(bot.getUpdates())
-    
-    MessageLoop(bot,handle1).run_as_thread()
-    # print("Listening")
-    
-    while 1:
-        time.sleep(10)
