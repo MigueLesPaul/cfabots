@@ -18,9 +18,9 @@ class  TwitBot(object):
 							 access_token_secret=credentials["Twitter Token Secret"]	
 			)
 
-	def post(self,media,msg):
-		self.twtapi.PostUpdates(status=msg,media=media) 
-
+	def postUpdate(self,media,msg):
+		response = self.twtapi.PostUpdates(status=msg,media=media) 
+		return response
 
 
 
