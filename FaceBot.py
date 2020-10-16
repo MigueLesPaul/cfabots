@@ -3,6 +3,10 @@ import json
 import time
 from datetime import datetime
 import facebook
+from subprocess import call
+import requests
+
+
 
 DEFAULT_MSG = 'Pronóstico para el {} de {} del {} a las {}:00 horas del modelo SisPI'
 FOLDER_NAME = 'wrfout_{}'
@@ -18,12 +22,9 @@ CONFIGURATION = {
     'sispi_output_directory':'/var/www/html/INSMET-webs/models/static/models/plots/sispi',
     }
 
-class Facebook:
+class Facebook():
 
-    page_id = '108484500941829'
-    user_access_token = 'EAAEWQo92a8oBAE73xe7ZAupGCQJhV7c9Xbq3mqhbgcaoHGZB8C8iZC91DKaqN2HYgTtZAC1tA55izsl3FrZCzrVv4bunfv5zzPc9ZBjBnTzjFZCMhwzJEZAv5ycFoWsZBaWjzt4vZCNxZApGv6gXFJPycnDzcs7wmCf3SIEpHmo7L3tBE0zKQhvlN9k0ZC4aGCaMIlkndZBCGiJPpZBAZDZD'
-    page_access_token = 'EAAEWQo92a8oBADMh9B1jWIhZAvOj551VDLVXaAgJC8AfB3Q4pXdMCD37ggBIxkEZCyS43YehgGOHh2hIthsAzdg9vHzzYEL2XDeW7vIni7B4kHK8kZB9a3hzokWZCOgi3m5i5Mv2Uyrzxpiqy1oD1u4kfrBBV0dejpTjxD8Gpjt2Q7ZCaHAqL'
-    
+       
     def __init__(self, p_page_id=None, p_user_access_token=None, p_page_access_token=None):
 
         if p_page_id:
@@ -66,6 +67,22 @@ class Facebook:
         except:
             return False
 
+    def post_video(self, video_source, description): 
+        cmd  = "curl -X POST 'https://graph-video.facebook.com/v8.0/{}/videos'".format(self.page_id)
+        cmd += " -F 'access_token={}'".format(self.page_access_token)
+        cmd += " -F 'source=@{}'".format(video_source)
+        cmd += " -F 'description={}'".format(description)
+        
+        try:
+            result = os.system(cmd)
+            return result
+        except:
+            with open('logs.txt') as file_log:
+                file_log.write(str(result))
+        
+        
+            
+
 
 def post_on_facebook(hour_initialization=None):
   
@@ -93,13 +110,8 @@ def post_on_facebook(hour_initialization=None):
 
 if __name__ == '__main__':
 
-    hour_initialization = ['00', '06', '12', '18']
-    post_on_facebook("18")
-    """
-    while True:
-        for hour in hour_initialization:
-            post_on_facebook(hour)
-    """
-            
+    fb = Facebook()
+    fb.post_video('/home/ariel/Trabajo/cfabot_venv/cfabots/prueba2.mp4', 'este es un video')
+   
 
 
