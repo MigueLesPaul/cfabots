@@ -31,7 +31,7 @@ def pngs2mp4(fileexpr, imagesize='640:480'):
 
     mimsave(newfilename+".gif",read_images(filelist))
     
-    vidwriter = get_writer(newfilename+".mp4",format='FFMPEG',fps=1,codec='h264',bitrate='20k')
+    vidwriter = get_writer(newfilename+".mp4",format='FFMPEG',fps=1,codec='h264',bitrate='40k')
 
     for img in read_images(filelist):
         print(img.shape)
