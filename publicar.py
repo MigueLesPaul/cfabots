@@ -107,7 +107,7 @@ def publicaSisPI(salida):
         initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
     
     vidfile = pngs2mp4(lluviafiles, imagesize='480x320')
-    # bot.post_vid(caption,vidfile)
+    bot.post_vid(caption,vidfile)
     print('publicado SisPI '+curoutput)
     open('msgbox.log', 'a').write(curoutput + '\n')
     sys.exit()
@@ -116,9 +116,42 @@ def publicaSisPI(salida):
 
 
 def publicaSPNOA(salida):
+    if len(salida)!=10:
+        print("Error de entrada de fecha")
+        sys.exit()
 
-    curoutput=salida
-    print('publicado Spnoa '+curoutput)
+    bot=CFABot()
+    outputdir = "/opt/spnoa/OUTPUTS_1W/outputs"
+    curoutput = salida
+
+    initdateZ = datetime.datetime(int(salida[:4]),int(salida[4:6]),int(salida[6:8]),int(salida[8:10]),0,tzinfo=pytz.UTC)
+    initdateL = initdateZ.astimezone()
+   
+
+
+    #WWW III
+
+    oleaje = join(outputdir, curoutput, "ww3_" + curoutput+"0000", 'ww3_graphic_output',
+                       "ww3_caribe_hs_sfc_[1,2,3]*")                                                # seleccionando las 24h a partir de las primeras 12
+
+    caption = """Pronóstico Numérico de oleaje para las próximas 24h a partir del modelo WWIII-SPNOA (Inicializado el día {} UTC/Hora local: {}) """.format(
+        initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
+    vidfile = pngs2mp4(oleaje, imagesize='480x320')
+    bot.post_vid(caption,vidfile)
+    print('publicado Spnoa WWIII'+curoutput)
+
+    #SWAN
+
+    oleaje = join(outputdir, curoutput, "ww3_" + curoutput+"0000", 'ww3_graphic_output',
+                       "swan_cuba_hs_sfc_[1,2,3]*")                                                    # seleccionando las 24h a partir de las primeras 12
+
+    caption = """Pronóstico Numérico de oleaje para las próximas 24h a partir del modelo SWAN-SPNOA(Inicializado el día {} UTC/Hora local: {}) """.format(
+        initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
+    
+    vidfile = pngs2mp4(oleaje, imagesize='480x320')
+    bot.post_vid(caption,vidfile)
+    print('publicado Spnoa SWAN'+curoutput)
+
 
 
 
