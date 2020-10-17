@@ -49,21 +49,21 @@ class CFABot(TelBot,Facebook,TwitBot):
                              caption=msg)
 			print(response)
 		except:
-			pass
+			print("Hubo un error al publicar en Telegram")
 
 		# Twitter	
 		try:
 			response = self.postUpdate(vidfile,msg)
 			print(response)
 		except:
-			pass
+			print("Hubo un error al publicar en Twitter")
 
 		# Facebook	
 		try:
 			response=self.post_video(vidfile,msg)
 			print(response)
 		except:
-			pass
+			print("Hubo un error al publicar en Facebook")
 
 
 
