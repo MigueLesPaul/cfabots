@@ -22,15 +22,17 @@ class CFABot(TelBot,Facebook,TwitBot):
 	"""
 	def __init__(self):
 		credentials = json.load(open(expanduser("~/credentials.json"),'r'))
-
-
-		super(TelBot, self  ).__init__(credentials['Telegram Bot Token'])
 		self.channel_id=credentials['Telegram channel_id']
+
+
+		# super(TelBot, self  ).__init__(credentials['Telegram Bot Token'])
+		TelBot.__init__(self,credentials['Telegram Bot Token'])
 
 		# super(Facebook, self).__init__(p_page_id=credentials["Facebook Page Id"] ,p_page_access_token=credentials['Facebook Page Token'])
 		Facebook.__init__(self,p_page_id=credentials["Facebook Page Id"] ,p_page_access_token=credentials['Facebook Page Token'])
 		
-		super(TwitBot, self  ).__init__()
+		TwitBot.__init__(self)
+		# super(TwitBot, self  ).__init__()
 
 
 
@@ -51,7 +53,8 @@ class CFABot(TelBot,Facebook,TwitBot):
 		except:
 			print("Hubo un error al publicar en Telegram")
 
-		# Twitter	
+		# Twitter
+		
 		try:
 			response = self.postUpdate(vidfile,msg)
 			print(response)
