@@ -160,7 +160,6 @@ if __name__ == '__main__':
         print("Error. Faltan argumentos")
     else:
         if sys.argv[1] == 'sispi':
-            print('h')
             publicaSisPI(sys.argv[2])
             sys.exit()
         elif sys.argv[1] == 'spnoa':
