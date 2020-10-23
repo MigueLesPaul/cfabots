@@ -136,9 +136,9 @@ def publicaSPNOA(salida):
 
     caption = """Pronóstico Numérico de oleaje para las próximas 24h a partir del modelo WWIII-SPNOA (Inicializado el día {} UTC/Hora local: {}) """.format(
         initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
-    vidfile = pngs2mp4(oleaje, imagesize='480x320')
-    bot.post_vid(caption,vidfile)
-    print('publicado Spnoa WWIII'+curoutput)
+    #vidfile = pngs2mp4(oleaje, imagesize='480x320')
+    #bot.post_vid(caption,vidfile)
+    #print('publicado Spnoa WWIII'+curoutput)
 
     #SWAN
 
