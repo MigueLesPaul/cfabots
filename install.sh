@@ -3,7 +3,7 @@
 # Instalación de cfabots
 
 home_dir=$(pwd)
-install_dir=/opt/sispi  # testbed
+install_dir=/opt/sispi/Operative_Scripts  # testbed
 
 
 ln -s -T ${home_dir}/publicar.py ${install_dir}/publicar.py
