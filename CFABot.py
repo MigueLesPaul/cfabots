@@ -6,13 +6,20 @@ import time
 from TelBot import TelBot
 from FaceBot import Facebook
 from TwittBot import TwitBot
-
+import logging 
+from systemd import journal
 
 # Centro de Física de la Atmósfera 2020 
 # Publicar salidas de SisPI en las redes sociales 
 # Miguel 
 # Ariel 
 # Adrián 
+
+
+log= logging.getLogger('CFABot')
+log.addHandler(journal.JournaldLogHandler())
+log.setLevel(logging.DEBUG)
+
 
 
 class CFABot(TelBot,Facebook,TwitBot):
@@ -51,7 +58,10 @@ class CFABot(TelBot,Facebook,TwitBot):
                              caption=msg)
 			print(response)
 		except:
-			print("Hubo un error al publicar en Telegram")
+			msglog="Hubo un error al publicar en Telegram"
+			log.info(msglog)
+			log.exception("")
+			print(msglog)
 
 		# Twitter
 		
@@ -59,15 +69,19 @@ class CFABot(TelBot,Facebook,TwitBot):
 			response = self.postUpdate(vidfile,msg)
 			print(response)
 		except:
-			print("Hubo un error al publicar en Twitter")
-
+			msglog="Hubo un error al publicar en Twitter"
+			log.info(msglog)
+			log.exception("")
+			print(msglog)
 		# Facebook	
 		try:
 			response=self.post_video(vidfile,msg)
 			print(response)
 		except:
-			print("Hubo un error al publicar en Facebook")
-
+			msglog="Hubo un error al publicar en Facebook"
+			log.info(msglog)
+			log.exception("")
+			print(msglog)
 
 
 # if __name__ == '__main__':
