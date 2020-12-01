@@ -108,11 +108,20 @@ def publicaSisPI(salida):
     
     vidfile = pngs2mp4(lluviafiles, imagesize='480x320')
     bot.post_vid(caption,vidfile)
+
+    # TEMPERATURE
+
+    tempfiles = join(outputdir, curoutput, "wrfout_" + curoutput, 'SFC/T',
+                       "wrfout_" + curoutput + "_d3_T_sfc_*")
+	caption = """Pronóstico Numérico de la temperatura del aire a 2 metros de altura para las próximas 24 horas a partir del modelo WRF-SisPI (Inicializado el día {} UTC/Hora local: {}) """.format(
+        initdateZ.strftime('%Y-%m-%d %H:%M',),initdateL.strftime('%Y-%m-%d %I:%M %p'))
+  	vidfile = pngs2mp4(tempfiles, imagesize='480x320')
+    bot.post_vid(caption,vidfile)
+    
+
     print('publicado SisPI '+curoutput)
     open('msgbox.log', 'a').write(curoutput + '\n')
     sys.exit()
-
-
 
 
 def publicaSPNOA(salida):
